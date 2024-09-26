@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -9,83 +13,118 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Meu App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
       ),
-      home: const MyHomePage(title: 'First'),
+      home: const LoginPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  late int num;
-
+class _LoginPageState extends State<LoginPage> {
   @override
-  void initState() {
-    num = 0;
-    super.initState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Meu App'),
+        backgroundColor: Colors.blue,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Bem Vindo!',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text('Sign in', style: TextStyle(fontSize: 20)),
+              const SizedBox(height: 20),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'User Name',
+                ),
+              ),
+              const SizedBox(height: 20),
+              const TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  // Forgot password functionality
+                },
+                child: const Text('Forgot Password'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                child: const Text('Login'),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Does not have account?"),
+                  TextButton(
+                    onPressed: () {
+                      // Navigate to sign up page
+                    },
+                    child: const Text('Sign in'),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('Home'),
       ),
-      body: Center(
-          child: Column(
-        children: [
-          Text(
-            num.toString(),
-            style: const TextStyle(fontSize: 42),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      num += 1;
-                    });
-                  },
-                  child: const Text(
-                    "Add",
-                    style: TextStyle(fontSize: 36),
-                  )),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      num -= 1;
-                    });
-                  },
-                  child: const Text(
-                    "Sub",
-                    style: TextStyle(fontSize: 36),
-                  ))
-            ],
-          )
-        ],
-      )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: const Center(
+        child: Text(
+          'Welcome to the Home Page!',
+          style: TextStyle(fontSize: 24),
+        ),
       ),
     );
   }
